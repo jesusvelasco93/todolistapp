@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+/* ADITIONAL */
+import AppComponent from './components/app/App.component';
+
+import './style/custom.scss';
+import 'open-iconic/font/css/open-iconic-bootstrap.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppComponent/>
   </React.StrictMode>,
   document.getElementById('root')
 );

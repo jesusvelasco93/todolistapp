@@ -1,0 +1,3 @@
+No se utiliza los siguientes plugins:
+- Redux -> No hay componentes que necesiten compartir estado a más de un salto
+- React router -> No hay necesidad de navegación en esta fase del proyecto, ya que el menú no es funcional
