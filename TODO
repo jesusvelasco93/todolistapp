@@ -1,3 +1,13 @@
 No se utiliza los siguientes plugins:
 - Redux -> No hay componentes que necesiten compartir estado a más de un salto
 - React router -> No hay necesidad de navegación en esta fase del proyecto, ya que el menú no es funcional
+
+TODOS:
+- Se añadirá un buscador encima del título centrado para buscar la pregunta por el texto basándose en el contenido de la pregunta
+de las almacenadas en el listado cargado (No se encuentra método para filtrar en el api)
+- Añadir routing para la navegación
+- Añadir redux para gestionar con más ventanas el control del estado
+
+ADICIONALES
+- No se introduce la columna ID y Author, al no devolverse en el API
+- El funcionamiento de la paginación es a gusto, se podría cambiar al más conveniente por el cliente
