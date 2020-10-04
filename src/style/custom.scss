@@ -1,3 +1,4 @@
+/* variables */
 $primaryColorDarkness: #000000;
 $primaryColorDark: #2A272A;
 $primaryColor: #4B4A54;
@@ -10,14 +11,14 @@ $secondaryColorLight: #CFFBE2;
 $fontColor: #ffffff;
 $fontColorAlt: $secondaryColor;
 
+/* Overwrite theme */
 $theme-colors: (
   "primary": $secondaryColor
 );
-
 @import '~bootstrap/scss/bootstrap.scss';
 
 
-
+/* Custom css and overwrite */
 body {
     background-color: $primaryColorLight;
 }
@@ -38,21 +39,39 @@ body {
         font-weight: bold;
         text-transform: uppercase;
         font-size: 0.75em;
+        transition: 0.5s ease-in;
+        &:hover {
+            background-color: $primaryColorLight;
+        }
     }
 }
 .tableQuestions {
     .headerQuestions {
         background-color: $primaryColorDark;
         th {
-            // color: $secondaryColor;
+            cursor: default;
             font-weight: 500;
             text-transform: capitalize;
+            &.sorteable {
+                cursor: pointer;
+                & > span {
+                    color: $secondaryColor;
+                    font-size: 0.75em;
+                    padding-left: 0.25em;
+                }
+                &:hover > span {
+                    color: $secondaryColorDark;
+                }
+            }
         }
     }
     .bodyQuestions {
         background-color: $primaryColorDarkness;
         td {
             padding: 0.5em;
+            &:last-child {
+                color: $secondaryColor;
+            }
         }
     }
 }
@@ -63,10 +82,7 @@ body {
         color: white;
         border: none;
         font-weight: bold;
-        span[aria-hidden='true'] {
-            font-size: 1em;
-            content: '->';
-        }
+        transition: 0.5s ease-in;
         &:not(.active):hover {
             background-color: $secondaryColor;
         }

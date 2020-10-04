@@ -2,13 +2,21 @@ import React from 'react';
 import Table from 'react-bootstrap/Table'
 import IQuestion from '../../../schemas/IQuestion';
 
-function TableComponent(props:{data:IQuestion[]}) {
+function TableComponent(props:{data:IQuestion[], sort:string, changeSort:Function}) {
+  // Generate sort icon
+  function generateIconSort(): string {
+    switch (props.sort){
+      case 'asc': return 'oi-caret-top';
+      case 'dsc': return 'oi-caret-bottom';
+      default: return 'oi-caret-right';
+    }
+  }
 
   return (
       <Table bordered hover variant="dark" className="tableQuestions">
         <thead className="headerQuestions">
           <tr>
-            <th>Category</th>
+            <th className="sorteable" onClick={()=>{props.changeSort();}}>Category <span className={`oi ${generateIconSort()}`}/></th>
             <th>Type</th>
             <th>Difficulty</th>
             <th>Question / Statement</th>

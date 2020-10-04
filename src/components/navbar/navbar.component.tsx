@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 
 function NavbarComponent() {
+  // Menu without funtionality
   return (
     <Navbar bg="dark justify-content-between" variant="dark" className="menuApp">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

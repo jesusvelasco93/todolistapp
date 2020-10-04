@@ -1,3 +1,4 @@
+/* Date returned and manipulete to show */
 export default interface IQuestion {
     category: string,
     correct_answer: string,

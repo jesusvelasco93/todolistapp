@@ -1,9 +1,13 @@
+/* Polyfill IE11 */
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+/* Basic */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
-/* ADITIONAL */
+/* Aditional components/services */
 import AppComponent from './components/app/App.component';
-
+/* Custom CSS */
 import './style/custom.scss';
 import 'open-iconic/font/css/open-iconic-bootstrap.css';
 
