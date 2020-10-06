@@ -5,15 +5,25 @@ import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
+/* Redux */
+import { Provider } from 'react-redux';
+import { createStore, Store } from "redux";
 /* Aditional components/services */
 import AppComponent from './components/app/App.component';
+import questionsPageReducer from './store/reducer';
+import { QuestionPageAction, QuestionPageState } from './store/type';
 /* Custom CSS */
 import './style/custom.scss';
 import 'open-iconic/font/css/open-iconic-bootstrap.css';
 
+/* STORE */
+const store: Store<QuestionPageState, QuestionPageAction> = createStore(questionsPageReducer);
+
 ReactDOM.render(
   <React.StrictMode>
-    <AppComponent/>
+    <Provider store={store}>
+      <AppComponent/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,11 +1,25 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table'
 import IQuestion from '../../../schemas/IQuestion';
+/* Redux */
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from 'react-redux';
+import { changeSort } from '../../../store/actions';
+import { QuestionPageState } from '../../../store/type';
 
-function TableComponent(props:{data:IQuestion[], sort:string, changeSort:Function}) {
+function TableComponent(props:{data:IQuestion[]}) {
+  // const data: readonly IQuestion[] = useSelector((state: QuestionPageState) => state.questions);
+  const sort: string = useSelector((state: QuestionPageState) => state.sort);
+  const dispatch: Dispatch<any> = useDispatch();
+
+  /* Change sort */
+  function rotateSort() {
+    const toSort = sort === "none" ? "dsc" : (sort === "dsc" ? "asc" : "none");
+    dispatch(changeSort(toSort));
+  }
   // Generate sort icon
   function generateIconSort(): string {
-    switch (props.sort){
+    switch (sort){
       case 'asc': return 'oi-caret-top';
       case 'dsc': return 'oi-caret-bottom';
       default: return 'oi-caret-right';
@@ -16,7 +30,7 @@ function TableComponent(props:{data:IQuestion[], sort:string, changeSort:Functio
       <Table bordered hover variant="dark" className="tableQuestions">
         <thead className="headerQuestions">
           <tr>
-            <th className="sorteable" onClick={()=>{props.changeSort();}}>Category <span className={`oi ${generateIconSort()}`}/></th>
+            <th className="sorteable" onClick={()=>{rotateSort()}}>Category <span className={`oi ${generateIconSort()}`}/></th>
             <th>Type</th>
             <th>Difficulty</th>
             <th>Question / Statement</th>
