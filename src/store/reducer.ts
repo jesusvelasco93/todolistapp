@@ -14,7 +14,6 @@ const initialState: QuestionPageState = {
 }
 
 const questionsPageReducer = (state: QuestionPageState = initialState, action: QuestionPageAction): QuestionPageState => {
-    console.log(action.type);
     switch (action.type) {
         case SET_INITIAL_CHARGE: {
             return {...state, 
@@ -41,7 +40,6 @@ const questionsPageReducer = (state: QuestionPageState = initialState, action: Q
             return { ...state, sort: sortOrder, questionsSorted: questionsSorted };
         }
         case CHANGE_PAGE: {
-            console.log(action.payload);
             return { ...state, currentPage: action.payload };
         }
         default: return state;
