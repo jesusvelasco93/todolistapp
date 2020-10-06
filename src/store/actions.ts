@@ -20,7 +20,6 @@ export function changeSort(sort:string) {
     }
 }
 export function changePage(numPage:number) {
-    // console.log("OK", CHANGE_PAGE);
     return  {
         type: CHANGE_PAGE,
         payload: numPage 

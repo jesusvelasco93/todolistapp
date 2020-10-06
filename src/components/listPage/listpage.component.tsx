@@ -68,7 +68,6 @@ function ListPageComponent() {
         }
     }
 
-    console.log(listPageState);
     return (
         <div className="container">
             <div className="row">
