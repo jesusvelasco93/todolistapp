@@ -102,10 +102,12 @@ body {
 #searchForm {
     background-color: $primaryColorDark;
     padding: 1em;
-    
     label {
         color: $fontColor;
         display: block;
+        span {
+            color: $secondaryColor;
+        }
     }
     input {
         display: inline-block;

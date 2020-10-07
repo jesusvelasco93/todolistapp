@@ -24,7 +24,7 @@ function SearchComponent() {
         <div style={{display: true ? "block" : "none" }}>
             <h1 className="titleApp">Search</h1>
             <div id="searchForm" className="form-group">
-                <label htmlFor="searchTextInput">Search question:
+                <label htmlFor="searchTextInput"><span className="oi oi-warning" title="Can not load more data from api when search, it must be server from the api"></span> Search question:
                     { textSearched ? 
                         <span className="searchedBox" onClick={removeTextSearch}>{textSearched} <span className="removeSearch">x</span></span> 
                     : null}
