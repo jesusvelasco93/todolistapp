@@ -17,6 +17,8 @@ const numQuestionPage = Enviroment.getEnviromentVariable("REACT_APP_NUMQUESTION"
 let maxPageLoaded = numPageInitial;
 
 function PaginationComponent() {
+  const isSearching: boolean = useSelector((state: QuestionPageState) => state.textSearch !== '');
+  const numQuestions: number = useSelector((state: QuestionPageState) => state.questionsSorted.length);
   const currentPage: number = useSelector((state: QuestionPageState) => state.currentPage);
   const dispatch: Dispatch<any> = useDispatch();
 
@@ -37,7 +39,14 @@ function PaginationComponent() {
 
   // Generate buttons to show
   let pageButtons = [];
-  for (let number = currentPage; number <= (currentPage + numPageInitial); number++) {
+  let initalNumPage = currentPage;
+  const numPagesPossible = Math.ceil(numQuestions / numQuestionPage); // Máx num page with load data
+  if (isSearching) { // In search no allow load more data
+    const firstEndPage = numPagesPossible - numPageInitial; // Generate first num page by the end
+    // First number to paint: if gt num max possible, show the last combination, if include lt 0, show from first page, anyway show normal pagination
+    initalNumPage = (currentPage + numPageInitial) > numPagesPossible ? (firstEndPage > 0 ? firstEndPage : 1) : currentPage;
+  }
+  for (let number = initalNumPage; (number <= (currentPage + numPageInitial) && (!isSearching || number <= numPagesPossible)); number++) {
     pageButtons.push(
       <Pagination.Item key={number} active={number === currentPage} onClick={()=>{moveTo(number)}}>
         {number}
@@ -49,7 +58,7 @@ function PaginationComponent() {
     <Pagination className="paginationZone" size="lg">
         { currentPage !== 1 ? <Pagination.Prev onClick={()=>{moveTo(currentPage - 1)}}>{`<`}</Pagination.Prev> : null}
         { pageButtons }
-        <Pagination.Next onClick={()=>{moveTo(currentPage + 1)}}>{`>`}</Pagination.Next>
+        { !isSearching || currentPage < numPagesPossible ? <Pagination.Next onClick={()=>{moveTo(currentPage + 1)}}>{`>`}</Pagination.Next>: null}
     </Pagination>
   );
 }

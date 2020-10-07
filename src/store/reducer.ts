@@ -43,7 +43,7 @@ const questionsPageReducer = (state: QuestionPageState = initialState, action: Q
         case CHANGE_SEARCH: {
             const textSearch = action.payload;
             const showQuestions = generateSortFilterQuestions([...state.questions], state.sort, textSearch);
-            return { ...state, textSearch: textSearch, questionsSorted: showQuestions }
+            return { ...state, textSearch: textSearch, currentPage: 1, questionsSorted: showQuestions }
         }
         case CHANGE_PAGE: {
             return { ...state, currentPage: action.payload };
@@ -53,9 +53,9 @@ const questionsPageReducer = (state: QuestionPageState = initialState, action: Q
 }
   
 const generateSortFilterQuestions = (questions: IQuestion[], sort: string, textSearch: string) =>{
-    const questionsSorted = (sort !== "none") ? Utils.sortObjects(questions, "category", sort) : questions;
-    const questionsFilter = (textSearch !== "") ? Utils.filterObjects(questionsSorted, "question", textSearch) : questionsSorted;
-    return questionsFilter;
+    const questionsFilter = (textSearch !== "") ? Utils.filterObjects(questions, "question", textSearch) : questions;
+    const questionsSorted = (sort !== "none") ? Utils.sortObjects(questionsFilter, "category", sort) : questionsFilter;
+    return questionsSorted;
 }
 
 export default questionsPageReducer;

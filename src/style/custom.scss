@@ -122,12 +122,13 @@ body {
         border-radius: 0.5em;
         padding: 0em 0.5em;
         margin-left: 0.5em;
+        color: $secondaryColorLight;
         cursor: pointer;
         &:hover {
             background: $primaryColor;
         }
         .removeSearch {
-            color: $secondaryColor;
+            color: $primaryColorDarkness;
         }
     }
 }
