@@ -2,6 +2,7 @@ import IQuestion from "../schemas/IQuestion";
 
 type QuestionPageState = {
     sort: string,
+    textSearch: string,
     currentPage: number,
     error: boolean,
     loading: boolean,

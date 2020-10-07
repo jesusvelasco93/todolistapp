@@ -1,11 +1,12 @@
 import { QuestionPageAction, QuestionPageState } from "./type";
-import { SET_INITIAL_CHARGE, ADD_QUESTIONS, CHANGE_SORT, CHANGE_PAGE } from "./actionTypes";
+import { SET_INITIAL_CHARGE, ADD_QUESTIONS, CHANGE_SORT, CHANGE_PAGE, CHANGE_SEARCH } from "./actionTypes";
 
 import IQuestion from "../schemas/IQuestion";
 import Utils from "../services/utils";
 
 const initialState: QuestionPageState = {
     sort: 'none',
+    textSearch: '',
     currentPage: 1,
     error: false,
     loading: true,
@@ -25,19 +26,24 @@ const questionsPageReducer = (state: QuestionPageState = initialState, action: Q
         }
         case ADD_QUESTIONS: {
             const newQuestions = state.questions.concat(action.payload.newQuestions);
-            const questionsSorted = (state.sort !== "none") ? Utils.sortObjects(newQuestions, "category", state.sort) : newQuestions;
+            const showQuestions = generateSortFilterQuestions([...newQuestions], state.sort, state.textSearch);
             return {...state, 
                 loading: false,
                 error: action.payload.error,
                 currentPage: action.payload.numPage,
                 questions: newQuestions,
-                questionsSorted: questionsSorted
+                questionsSorted: showQuestions
             };
         }
         case CHANGE_SORT: {
             const sortOrder = action.payload;
-            const questionsSorted = (sortOrder !== "none") ? Utils.sortObjects([...state.questions], "category", sortOrder) : state.questions;
-            return { ...state, sort: sortOrder, questionsSorted: questionsSorted };
+            const showQuestions = generateSortFilterQuestions([...state.questions], sortOrder, state.textSearch);
+            return { ...state, sort: sortOrder, questionsSorted: showQuestions };
+        }
+        case CHANGE_SEARCH: {
+            const textSearch = action.payload;
+            const showQuestions = generateSortFilterQuestions([...state.questions], state.sort, textSearch);
+            return { ...state, textSearch: textSearch, questionsSorted: showQuestions }
         }
         case CHANGE_PAGE: {
             return { ...state, currentPage: action.payload };
@@ -46,4 +52,10 @@ const questionsPageReducer = (state: QuestionPageState = initialState, action: Q
     }
 }
   
+const generateSortFilterQuestions = (questions: IQuestion[], sort: string, textSearch: string) =>{
+    const questionsSorted = (sort !== "none") ? Utils.sortObjects(questions, "category", sort) : questions;
+    const questionsFilter = (textSearch !== "") ? Utils.filterObjects(questionsSorted, "question", textSearch) : questionsSorted;
+    return questionsFilter;
+}
+
 export default questionsPageReducer;

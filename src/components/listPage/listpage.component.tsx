@@ -13,6 +13,7 @@ import TableComponent from '../listPage/table/table.component';
 import PaginationComponent from '../listPage/pagination/pagination.component';
 /* ENV variables */
 import Enviroment from '../../services/enviroment';
+import SearchComponent from './search/search.component';
 const numQuestionPage = Enviroment.getEnviromentVariable("REACT_APP_NUMQUESTION");
 
 // Initial page, this go to router component
@@ -32,12 +33,14 @@ function ListPageComponent() {
     function generateTextTitle() {
         return listPageState.loading ? "Loading app.." : (listPageState.error) ? "An error happend" : "Browse Questions";
     }
-
     return (
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    <h1 className="titleApp">{generateTextTitle()}</h1>
+                    <SearchComponent/>
+                </div>
+                <div className="col-12">
+                    <h1 className="titleApp tableTitle">{generateTextTitle()}</h1>
                     {   !listPageState.loading && !listPageState.error ?
                             <div>
                                 <TableComponent/>
