@@ -25,19 +25,3 @@ export function changePage(numPage:number) {
         payload: numPage 
     }
 }
-// interface AddQuestionsAction {
-//     type: typeof ADD_QUESTIONS
-//     payload: IQuestion[]
-// }
-
-// interface ChangeSortAction {
-//     type: typeof CHANGE_SORT
-//     payload: string
-// }
-
-// interface ChangePageAction {
-//     type: typeof CHANGE_PAGE
-//     payload: number
-// }
-  
-// export type ActionTypes = AddQuestionsAction | ChangeSortAction | ChangePageAction;

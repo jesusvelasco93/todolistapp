@@ -6,9 +6,13 @@ import { Dispatch } from "redux";
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSort } from '../../../store/actions';
 import { QuestionPageState } from '../../../store/type';
+/* ENV variables */
+import Enviroment from './../../../services/enviroment';
+const numQuestionPage = Enviroment.getEnviromentVariable("REACT_APP_NUMQUESTION");
 
-function TableComponent(props:{data:IQuestion[]}) {
-  // const data: readonly IQuestion[] = useSelector((state: QuestionPageState) => state.questions);
+function TableComponent() {
+  const questionsSorted: IQuestion[] = useSelector((state: QuestionPageState) => state.questionsSorted);
+  const currentPage: number = useSelector((state: QuestionPageState) => state.currentPage);
   const sort: string = useSelector((state: QuestionPageState) => state.sort);
   const dispatch: Dispatch<any> = useDispatch();
 
@@ -17,6 +21,24 @@ function TableComponent(props:{data:IQuestion[]}) {
     const toSort = sort === "none" ? "dsc" : (sort === "dsc" ? "asc" : "none");
     dispatch(changeSort(toSort));
   }
+
+  /* funtion to filter questions in view */
+  function generateQuestionInView(): IQuestion[] {
+    let questionsInView: IQuestion[] = [];
+    try {
+        if (currentPage > 0) {
+            const firstQuestion = (currentPage-1) * numQuestionPage;
+            // const lastQuestion = listPageState.currentPage * numQuestionPage;
+            const auxQuestions = [...questionsSorted];
+            questionsInView = auxQuestions.length > numQuestionPage ? auxQuestions.splice(firstQuestion, numQuestionPage) : [];
+        }
+    } catch (err) {
+        console.error("An error happend while the questions were paginating");
+    } finally {
+        return questionsInView;
+    }
+  }
+
   // Generate sort icon
   function generateIconSort(): string {
     switch (sort){
@@ -37,7 +59,7 @@ function TableComponent(props:{data:IQuestion[]}) {
           </tr>
         </thead>
         <tbody className="bodyQuestions">
-          { props.data.map((question, index) =>
+          { generateQuestionInView().map((question, index) =>
             <tr key={index}>
               <td>{decodeURIComponent(question.category)}</td>
               <td>{decodeURIComponent(question.type)}</td>
